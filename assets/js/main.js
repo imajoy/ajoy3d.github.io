@@ -1,6 +1,55 @@
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
 const categories = ['Realistic','Stylized','Toon','Product','Rigging'];
+function protectImage(image){
+  if(!image || image.dataset.protectionBound === '1') return;
+  image.dataset.protectionBound = '1';
+  image.setAttribute('draggable','false');
+  image.setAttribute('oncontextmenu','return false');
+  image.setAttribute('ondragstart','return false');
+  image.setAttribute('onselectstart','return false');
+
+  const block = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
+  };
+
+  // Block the usual casual save/copy gestures for protected portfolio images.
+  ['contextmenu','dragstart','selectstart','copy','cut'].forEach(type => {
+    image.addEventListener(type, block, {capture:true});
+  });
+}
+
+function protectVideo(video){
+  if(!video || video.dataset.protectionBound === '1') return;
+  video.dataset.protectionBound = '1';
+
+  // Best-effort deterrent against casual saving/downloading.
+  video.setAttribute('controlsList', 'nodownload noplaybackrate');
+  video.setAttribute('disablepictureinpicture', '');
+  video.setAttribute('disableremoteplayback', '');
+  video.setAttribute('draggable', 'false');
+
+  const block = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
+  };
+
+  video.addEventListener('contextmenu', block, {capture:true});
+  video.addEventListener('dragstart', block, {capture:true});
+  video.addEventListener('selectstart', block, {capture:true});
+  video.addEventListener('copy', block, {capture:true});
+  video.addEventListener('cut', block, {capture:true});
+
+  // Block common keyboard shortcuts while a video is focused.
+  video.addEventListener('keydown', (event) => {
+    const key = String(event.key || '').toLowerCase();
+    if ((event.ctrlKey || event.metaKey) && ['s','u','c'].includes(key)) block(event);
+  }, {capture:true});
+}
+
 const rowIntro = {
   Realistic:'Grounded character performance, mocap and believable movement.',
   Toon:'Acting, timing and expressive character animation.',
@@ -66,6 +115,7 @@ function grabThumb(video){
 function bindWorkCards(){
   $$('.work-card').forEach(card=>{
     const video=card.querySelector('video');
+    protectVideo(video);
     const settle=()=>{ if(video.dataset.thumbTime){ video.currentTime=parseFloat(video.dataset.thumbTime); } };
     if(video.readyState>=1){ grabThumb(video); } else { video.addEventListener('loadedmetadata', ()=>grabThumb(video), {once:true}); }
     card.addEventListener('mouseenter',()=>{ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){video.play().catch(()=>{});} });
@@ -80,7 +130,7 @@ function openModal(id){
 }
 function updateModal(){
   const p=PROJECTS[currentIndex]; $('#modal-category').textContent=p.category; $('#modal-title').textContent=p.title; $('#modal-count').textContent=`${String(currentIndex+1).padStart(2,'0')} / ${String(PROJECTS.length).padStart(2,'0')}`;
-  $('#modal-video').innerHTML=`<video controls autoplay playsinline src="${p.src}"></video>`;
+  $('#modal-video').innerHTML=`<video controls controlslist="nodownload noplaybackrate" disablepictureinpicture disableremoteplayback playsinline autoplay draggable="false" src="${p.src}"></video>`; protectVideo($('#modal-video video'));
 }
 function closeModal(){ const m=$('#modal'); m.classList.remove('open'); m.setAttribute('aria-hidden','true'); document.body.classList.remove('modal-open'); $('#modal-video').innerHTML=''; }
 function revealElements(){
@@ -90,6 +140,14 @@ function revealElements(){
   els.forEach(e=>window.__revealObserver.observe(e));
 }
 function init(){
+  document.querySelectorAll('video').forEach(protectVideo);
+  document.querySelectorAll('.protected-image').forEach(protectImage);
+  document.addEventListener('contextmenu', (event) => {
+    if(event.target.closest && event.target.closest('.protected-image-wrap')){
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }, {capture:true});
   renderRows();
   $$('#work-filter .filter').forEach(btn=>btn.addEventListener('click',()=>{ $$('#work-filter .filter').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderRows(btn.dataset.category); }));
   $('#modal-close').addEventListener('click',closeModal); $$('.modal-backdrop').forEach(x=>x.addEventListener('click',closeModal));
@@ -102,3 +160,4 @@ function init(){
   $('#year').textContent=new Date().getFullYear();
 }
 document.addEventListener('DOMContentLoaded',init);
+
