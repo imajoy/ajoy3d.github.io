@@ -1,233 +1,72 @@
-(function () {
-  "use strict";
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => [...document.querySelectorAll(s)];
+const categories = ['Realistic','Stylized','Toon','Product','Rigging'];
+const rowIntro = {
+  Realistic:'Grounded character performance, mocap and believable movement.',
+  Toon:'Acting, timing and expressive character animation.',
+  Stylized:'Stylized motion studies and driven shots.',
+  Rigging:'Character setup and animation-ready rig workflows.',
+  Product:'Clean product motion for advertising and presentation.'
+};
 
-  /* ---- Nav: solid background once the hero banner scrolls past ---- */
-  const nav = document.querySelector(".nav");
-  const heroBanner = document.querySelector(".hero__banner");
-
-  function updateNavState() {
-    const threshold = heroBanner ? heroBanner.getBoundingClientRect().bottom - 68 : 40;
-    nav.classList.toggle("is-solid", threshold <= 0 || window.scrollY > 40);
+function projectCard(p, index, wide=false){
+  return `<article class="work-card ${wide?'wide':''} reveal" data-id="${p.id}">
+    <button class="work-media" data-project="${p.id}" aria-label="Watch ${p.title}">
+      <video muted loop playsinline preload="metadata" src="${p.src}"></video>
+      <span class="media-shade"></span><span class="media-meta"><span>${String(index+1).padStart(2,'0')}</span><span>${p.category}</span></span>
+      <span class="play-icon">↗</span>
+    </button>
+    <div class="work-card-copy"><div><h3>${p.title}</h3><p>${p.category}</p></div><span class="watch">WATCH ↗</span></div>
+  </article>`;
+}
+function renderRows(filter='All'){
+  const wrap=$('#work-rows');
+  if(filter==='All'){
+    wrap.innerHTML = categories.map((cat,ci)=>{
+      const items=PROJECTS.filter(p=>p.category===cat);
+      const cards=items.map((p,i)=>projectCard(p,i,i===0)).join('');
+      return `<section class="work-row reveal"><div class="work-row-head"><div class="row-title"><span>0${ci+1}</span><h3>${cat==='Toon'?'Toon & Acting':cat==='Realistic'?'Realistic Animation':cat==='Stylized'?'Stylized Work':cat}</h3></div><p>${rowIntro[cat]}</p></div><div class="row-track">${cards}</div></section>`;
+    }).join('');
+  } else {
+    const items=PROJECTS.filter(p=>p.category===filter);
+    wrap.innerHTML = `<section class="work-row"><div class="work-row-head"><div class="row-title"><span>01</span><h3>${filter==='Toon'?'Toon & Acting':filter==='Realistic'?'Realistic Animation':filter==='Stylized'?'Stylized Work':filter}</h3></div><p>${rowIntro[filter]}</p></div><div class="row-track filtered-track">${items.map((p,i)=>projectCard(p,i,i===0)).join('')}</div></section>`;
   }
-  window.addEventListener("scroll", updateNavState, { passive: true });
-  updateNavState();
-
-  /* ---- Mobile menu ---- */
-  const navToggle = document.querySelector(".nav__toggle");
-  const mobileMenu = document.querySelector(".mobile-menu");
-
-  function closeMobileMenu() {
-    mobileMenu.classList.remove("is-open");
-    navToggle.setAttribute("aria-expanded", "false");
-  }
-
-  navToggle.addEventListener("click", () => {
-    const isOpen = mobileMenu.classList.toggle("is-open");
-    navToggle.setAttribute("aria-expanded", String(isOpen));
+  bindWorkCards(); revealElements();
+}
+function bindWorkCards(){
+  $$('.work-card').forEach(card=>{
+    const video=card.querySelector('video');
+    card.addEventListener('mouseenter',()=>{ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){video.play().catch(()=>{});} });
+    card.addEventListener('mouseleave',()=>{ video.pause(); video.currentTime=0; });
+    card.querySelector('[data-project]').addEventListener('click',()=>openModal(card.dataset.id));
   });
-
-  mobileMenu.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeMobileMenu));
-
-  /* ---- Build work cards from PROJECTS (assets/js/projects.js) ---- */
-  const grid = document.getElementById("work-grid");
-  const emptyState = document.getElementById("work-empty");
-  const filtersEl = document.getElementById("filters");
-
-  function playIconSVG() {
-    return (
-      '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
-      '<circle cx="12" cy="12" r="11" stroke="currentColor" stroke-width="1.4" opacity="0.85"/>' +
-      '<path d="M10 8.5L16 12L10 15.5V8.5Z" fill="currentColor"/>' +
-      "</svg>"
-    );
-  }
-
-  function buildCard(project) {
-    const card = document.createElement("article");
-    card.className = "card";
-    card.dataset.category = project.category;
-
-    const frame = document.createElement("button");
-    frame.type = "button";
-    frame.className = "card__frame" + (project.posterImage ? "" : " " + project.thumbClass);
-    frame.setAttribute("aria-label", "Play " + project.title);
-
-    if (project.posterImage) {
-      const img = document.createElement("img");
-      img.src = project.posterImage;
-      img.alt = project.title + " — poster frame";
-      img.loading = "lazy";
-      frame.appendChild(img);
-    }
-
-    frame.insertAdjacentHTML(
-      "beforeend",
-      '<span class="card__corner card__corner--tl"></span>' +
-        '<span class="card__corner card__corner--br"></span>' +
-        '<span class="card__play">' +
-        playIconSVG() +
-        "</span>"
-    );
-
-    frame.addEventListener("click", () => openModal(project.id));
-
-    const body = document.createElement("div");
-    body.className = "card__body";
-    body.innerHTML =
-      '<h3 class="card__title"></h3>' +
-      '<div class="card__meta">' +
-      '<span class="card__category"></span>' +
-      '<span class="card__frame-range"></span>' +
-      "</div>";
-    body.querySelector(".card__title").textContent = project.title;
-    body.querySelector(".card__category").textContent = project.category;
-    body.querySelector(".card__frame-range").textContent = project.frameRange || "";
-
-    card.appendChild(frame);
-    card.appendChild(body);
-    return card;
-  }
-
-  function renderGrid() {
-    grid.innerHTML = "";
-    PROJECTS.forEach((p) => grid.appendChild(buildCard(p)));
-  }
-  renderGrid();
-
-  /* ---- Filtering ---- */
-  let activeCategory = "All";
-
-  function applyFilter(category, animate) {
-    activeCategory = category;
-    const cards = Array.from(grid.children);
-    const doFilter = () => {
-      let visibleCount = 0;
-      cards.forEach((card) => {
-        const match = category === "All" || card.dataset.category === category;
-        card.classList.toggle("is-hidden", !match);
-        if (match) visibleCount++;
-      });
-      emptyState.classList.toggle("is-visible", visibleCount === 0);
-      grid.classList.remove("is-transitioning");
-    };
-
-    if (animate) {
-      grid.classList.add("is-transitioning");
-      window.setTimeout(doFilter, 160);
-    } else {
-      doFilter();
-    }
-  }
-
-  filtersEl.addEventListener("click", (e) => {
-    const btn = e.target.closest(".filter-tab");
-    if (!btn) return;
-    filtersEl.querySelectorAll(".filter-tab").forEach((t) => {
-      t.classList.remove("is-active");
-      t.setAttribute("aria-pressed", "false");
-    });
-    btn.classList.add("is-active");
-    btn.setAttribute("aria-pressed", "true");
-    applyFilter(btn.dataset.category, true);
-  });
-
-  applyFilter("All", false);
-
-  /* ---- Modal / lightbox ---- */
-  const backdrop = document.getElementById("modal-backdrop");
-  const modalFrame = document.getElementById("modal-frame");
-  const modalTitle = document.getElementById("modal-title");
-  const modalCategory = document.getElementById("modal-category");
-  const modalClose = document.getElementById("modal-close");
-  const modalPrev = document.getElementById("modal-prev");
-  const modalNext = document.getElementById("modal-next");
-
-  let lastFocusedEl = null;
-
-  function visibleProjectIds() {
-    return PROJECTS.filter((p) => activeCategory === "All" || p.category === activeCategory).map((p) => p.id);
-  }
-
-  function videoMarkup(project) {
-    const v = project.video || { type: "placeholder" };
-    if (v.type === "youtube" && v.id) {
-      return (
-        '<iframe src="https://www.youtube.com/embed/' +
-        v.id +
-        '?rel=0" title="' +
-        project.title +
-        '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-      );
-    }
-    if (v.type === "vimeo" && v.id) {
-      return (
-        '<iframe src="https://player.vimeo.com/video/' +
-        v.id +
-        '" title="' +
-        project.title +
-        '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>'
-      );
-    }
-    if (v.type === "local" && v.src) {
-      return '<video src="' + v.src + '" controls playsinline></video>';
-    }
-    return (
-      '<div class="modal__placeholder">' +
-      "<p>No playblast linked yet for this project.</p>" +
-      "<p>Add one in <code>assets/js/projects.js</code> — set this project's " +
-      "<code>video</code> field to a YouTube, Vimeo, or local file source.</p>" +
-      "</div>"
-    );
-  }
-
-  function openModal(projectId) {
-    const project = PROJECTS.find((p) => p.id === projectId);
-    if (!project) return;
-
-    lastFocusedEl = document.activeElement;
-    modalFrame.innerHTML = videoMarkup(project);
-    modalTitle.textContent = project.title;
-    modalCategory.textContent = project.category;
-    backdrop.dataset.current = projectId;
-
-    backdrop.classList.add("is-open");
-    backdrop.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
-    modalClose.focus();
-  }
-
-  function closeModal() {
-    backdrop.classList.remove("is-open");
-    backdrop.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
-    modalFrame.innerHTML = "";
-    if (lastFocusedEl) lastFocusedEl.focus();
-  }
-
-  function stepModal(direction) {
-    const ids = visibleProjectIds();
-    const currentIndex = ids.indexOf(backdrop.dataset.current);
-    if (currentIndex === -1) return;
-    const nextIndex = (currentIndex + direction + ids.length) % ids.length;
-    openModal(ids[nextIndex]);
-  }
-
-  modalClose.addEventListener("click", closeModal);
-  modalPrev.addEventListener("click", () => stepModal(-1));
-  modalNext.addEventListener("click", () => stepModal(1));
-
-  backdrop.addEventListener("click", (e) => {
-    if (e.target === backdrop) closeModal();
-  });
-
-  document.addEventListener("keydown", (e) => {
-    if (!backdrop.classList.contains("is-open")) return;
-    if (e.key === "Escape") closeModal();
-    if (e.key === "ArrowRight") stepModal(1);
-    if (e.key === "ArrowLeft") stepModal(-1);
-  });
-
-  /* ---- Footer year ---- */
-  const yearEl = document.getElementById("year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-})();
+}
+let currentIndex=0;
+function openModal(id){
+  currentIndex=PROJECTS.findIndex(p=>p.id===id); if(currentIndex<0) currentIndex=0; updateModal();
+  const m=$('#modal'); m.classList.add('open'); m.setAttribute('aria-hidden','false'); document.body.classList.add('modal-open');
+}
+function updateModal(){
+  const p=PROJECTS[currentIndex]; $('#modal-category').textContent=p.category; $('#modal-title').textContent=p.title; $('#modal-count').textContent=`${String(currentIndex+1).padStart(2,'0')} / ${String(PROJECTS.length).padStart(2,'0')}`;
+  $('#modal-video').innerHTML=`<video controls autoplay playsinline src="${p.src}"></video>`;
+}
+function closeModal(){ const m=$('#modal'); m.classList.remove('open'); m.setAttribute('aria-hidden','true'); document.body.classList.remove('modal-open'); $('#modal-video').innerHTML=''; }
+function revealElements(){
+  const els=$$('.reveal:not(.is-visible)');
+  if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('is-visible'));return;}
+  if(!window.__revealObserver){ window.__revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');window.__revealObserver.unobserve(e.target);}}),{threshold:.12,rootMargin:'0px 0px -50px'}); }
+  els.forEach(e=>window.__revealObserver.observe(e));
+}
+function init(){
+  renderRows();
+  $$('#work-filter .filter').forEach(btn=>btn.addEventListener('click',()=>{ $$('#work-filter .filter').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderRows(btn.dataset.category); }));
+  $('#modal-close').addEventListener('click',closeModal); $$('.modal-backdrop').forEach(x=>x.addEventListener('click',closeModal));
+  $('#modal-prev').addEventListener('click',()=>{currentIndex=(currentIndex-1+PROJECTS.length)%PROJECTS.length;updateModal();});
+  $('#modal-next').addEventListener('click',()=>{currentIndex=(currentIndex+1)%PROJECTS.length;updateModal();});
+  window.addEventListener('keydown',e=>{if(!$('#modal').classList.contains('open'))return;if(e.key==='Escape')closeModal();if(e.key==='ArrowLeft')$('#modal-prev').click();if(e.key==='ArrowRight')$('#modal-next').click();});
+  const header=$('#site-header'); let lastY=0; window.addEventListener('scroll',()=>{const y=window.scrollY; header.classList.toggle('scrolled',y>30); if(y>lastY && y>180) header.classList.add('hidden'); else header.classList.remove('hidden'); lastY=y; const max=document.body.scrollHeight-window.innerHeight; $('#scroll-progress').style.transform=`scaleX(${max>0?y/max:0})`;},{passive:true});
+  $('#menu-btn').addEventListener('click',()=>{const open=$('#mobile-nav').classList.toggle('open');$('#menu-btn').setAttribute('aria-expanded',String(open));});
+  $$('#mobile-nav a').forEach(a=>a.addEventListener('click',()=>$('#mobile-nav').classList.remove('open')));
+  $('#year').textContent=new Date().getFullYear();
+}
+document.addEventListener('DOMContentLoaded',init);
