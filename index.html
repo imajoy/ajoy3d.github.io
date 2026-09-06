@@ -1,212 +1,133 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ajoy Pal — 3D Animator</title>
-  <meta name="description" content="Ajoy Pal — 3D Animator specializing in character animation, mocap cleanup, rigging, and cinematic gameplay sequences in Maya, MotionBuilder, Blender, and Unreal Engine." />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Mono:wght@500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-  <link rel="stylesheet" href="assets/css/styles.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b0c0d">
+<meta name="description" content="Ajoy Pal — 3D Animator specializing in character animation, gameplay, cinematic animation and mocap.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ajoy Pal — 3D Animator">
+<meta property="og:description" content="3D Animator focused on character performance, gameplay animation, mocap and cinematic movement.">
+<meta property="og:image" content="assets/img/banner.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ajoy Pal — 3D Animator">
+<meta name="twitter:description" content="3D Animator focused on character performance, gameplay animation, mocap and cinematic movement.">
+<meta name="twitter:image" content="assets/img/banner.jpg">
+<title>Ajoy Pal — 3D Animator</title>
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="assets/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-
-  <!-- ============================= NAV ============================= -->
-  <header class="nav">
-    <div class="container nav__inner">
-      <a href="#top" class="nav__mark">AJOY<span>.</span></a>
-
-      <nav class="nav__links" aria-label="Primary">
-        <a href="#about">About</a>
-        <a href="#work">Playblasts</a>
-        <a href="#contact">Contact</a>
-      </nav>
-
-      <div class="nav__social">
-        <a href="https://www.linkedin.com/in/palajoy/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="7.5" y1="10" x2="7.5" y2="17"/><circle cx="7.5" cy="6.7" r="0.9" fill="currentColor" stroke="none"/><path d="M11.5 17v-4.2c0-1.4 1-2.3 2.3-2.3s2.2.9 2.2 2.3V17"/><line x1="11.5" y1="10" x2="11.5" y2="17"/></svg>
-        </a>
-        <a href="https://www.artstation.com/ajoypal1" target="_blank" rel="noopener noreferrer" aria-label="ArtStation profile">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M8 8.5h4.2L16 15.5"/><path d="M9.8 12.2L7 17"/></svg>
-        </a>
-      </div>
-
-      <button class="nav__toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
-      </button>
+<div class="scroll-progress" id="scroll-progress"></div>
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="#top" aria-label="Ajoy Pal home"><span class="brand-mark">AP</span><span>AJOY PAL</span></a>
+    <nav class="main-nav" aria-label="Primary">
+      <a href="#work">Work</a><a href="#experience">Experience</a><a href="#about">About</a><a href="#milestones">Milestones</a><a href="#contact">Contact</a>
+    </nav>
+    <div class="header-side">
+      <a class="social-link" href="https://www.linkedin.com/in/palajoy/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">in</a>
+      <a class="social-link" href="https://ajoypal1.artstation.com/" target="_blank" rel="noopener noreferrer" aria-label="ArtStation">A</a>
+      <a class="header-cta" href="https://drive.google.com/file/d/16frUzPtU_Pmw8xlfYXTam2T-8AL-5LH4/view" target="_blank" rel="noopener noreferrer">Resume <span>↗</span></a>
     </div>
-  </header>
-
-  <div class="mobile-menu" id="mobile-menu">
-    <a href="#about">About</a>
-    <a href="#work">Playblasts</a>
-    <a href="#contact">Contact</a>
-    <div class="mobile-menu__social">
-      <a href="https://www.linkedin.com/in/palajoy/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="7.5" y1="10" x2="7.5" y2="17"/><circle cx="7.5" cy="6.7" r="0.9" fill="currentColor" stroke="none"/><path d="M11.5 17v-4.2c0-1.4 1-2.3 2.3-2.3s2.2.9 2.2 2.3V17"/><line x1="11.5" y1="10" x2="11.5" y2="17"/></svg>
-      </a>
-      <a href="https://www.artstation.com/ajoypal1" target="_blank" rel="noopener noreferrer" aria-label="ArtStation profile">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M8 8.5h4.2L16 15.5"/><path d="M9.8 12.2L7 17"/></svg>
-      </a>
-    </div>
+    <button class="menu-btn" id="menu-btn" aria-label="Open navigation" aria-expanded="false"><span></span><span></span></button>
   </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="#work">Work</a><a href="#experience">Experience</a><a href="#about">About</a><a href="#milestones">Milestones</a><a href="#contact">Contact</a>
+    <a href="https://drive.google.com/file/d/16frUzPtU_Pmw8xlfYXTam2T-8AL-5LH4/view" target="_blank" rel="noopener noreferrer">Resume ↗</a>
+  </div>
+</header>
 
-  <div id="top"></div>
-
-  <!-- ============================= HERO ============================= -->
+<main id="top">
   <section class="hero">
-    <div class="hero__banner">
-      <img src="assets/img/banner.jpg" alt="Cinematic 3D render of a samurai overlooking misty mountains at sunset — Ajoy Pal, 3D Gameplay &amp; Cinematic Animator" />
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-image-wrap">
+      <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="assets/video/Realistic/MOCAP Game Fight Scene.mp4" type="video/mp4">
+      </video>
     </div>
-
-    <div class="container hero__intro">
-      <div class="hero__avatar">
-        <img src="assets/img/profile.jpg" alt="Portrait of Ajoy Pal" />
-      </div>
-
-      <div class="hero__info">
-        <h1 class="hero__name">Ajoy Pal</h1>
-        <p class="hero__role">3D Animator — <b>Gameplay &amp; Cinematic</b> · Mocap · Rigging</p>
-        <div class="hero__socials">
-          <a href="https://www.linkedin.com/in/palajoy/" target="_blank" rel="noopener noreferrer">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="7.5" y1="10" x2="7.5" y2="17"/><circle cx="7.5" cy="6.7" r="0.9" fill="currentColor" stroke="none"/><path d="M11.5 17v-4.2c0-1.4 1-2.3 2.3-2.3s2.2.9 2.2 2.3V17"/><line x1="11.5" y1="10" x2="11.5" y2="17"/></svg>
-            LinkedIn
-          </a>
-          <a href="https://www.artstation.com/ajoypal1" target="_blank" rel="noopener noreferrer">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M8 8.5h4.2L16 15.5"/><path d="M9.8 12.2L7 17"/></svg>
-            ArtStation
-          </a>
-        </div>
-      </div>
-
-      <a href="#work" class="hero__cta btn">Watch the playblasts</a>
-    </div>
-  </section>
-
-  <main>
-    <!-- ============================= ABOUT ============================= -->
-    <section class="section" id="about">
-      <div class="container about">
-        <div class="about__bio">
-          <p>I am a dedicated 3D Animator with a passion for creating art that tells compelling stories. Over the course of my career, I have worked on diverse projects, including realistic and cartoon animations, continuously honing my craft.</p>
-          <p>I have a strong foundation in mocap body animation, with hands-on experience in MotionBuilder and mocap data cleanup. My expertise spans key industry tools such as Maya, Blender, and Unreal Engine, allowing me to deliver high-quality, engaging animations. I am driven by a deep commitment to the animation industry and remain eager to contribute to its future with creativity, precision, and innovation.</p>
-        </div>
-
-        <div class="tools">
-          <span class="tools__label">Pipeline &amp; tools</span>
-          <div class="tools__grid">
-            <div class="tool">
-              <span class="tool__dot" style="background: var(--accent)"></span>
-              <span>
-                <span class="tool__name">Maya</span>
-                <span class="tool__use">Character animation</span>
-              </span>
-            </div>
-            <div class="tool">
-              <span class="tool__dot" style="background: var(--accent-2)"></span>
-              <span>
-                <span class="tool__name">MotionBuilder</span>
-                <span class="tool__use">Mocap cleanup</span>
-              </span>
-            </div>
-            <div class="tool">
-              <span class="tool__dot" style="background: var(--accent)"></span>
-              <span>
-                <span class="tool__name">Blender</span>
-                <span class="tool__use">Modeling &amp; animation</span>
-              </span>
-            </div>
-            <div class="tool">
-              <span class="tool__dot" style="background: var(--accent-2)"></span>
-              <span>
-                <span class="tool__name">Unreal Engine</span>
-                <span class="tool__use">Cinematics &amp; gameplay</span>
-              </span>
-            </div>
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <div class="hero-topline reveal"><span>3D ANIMATOR</span><span>GAMEPLAY · CINEMATIC · MOCAP</span><span>INDIA</span></div>
+      <div class="hero-main">
+        <div class="hero-copy reveal">
+          <p class="eyebrow">Character animation / performance</p>
+          <h1>Ajoy Pal<span>.</span></h1>
+          <p class="hero-lead">3D Animator focused on character performance, gameplay animation, mocap and cinematic movement.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#work">View My Work <span>↓</span></a>
+            <a class="btn btn-secondary" href="https://drive.google.com/file/d/16frUzPtU_Pmw8xlfYXTam2T-8AL-5LH4/view" target="_blank" rel="noopener noreferrer">Resume <span>↗</span></a>
           </div>
         </div>
-      </div>
-    </section>
-
-    <div class="container"><div class="timeline-rule" role="presentation"></div></div>
-
-    <!-- ============================= WORK ============================= -->
-    <section class="section" id="work">
-      <div class="container">
-        <div class="section__head">
-          <h2 class="section__title">Playblasts</h2>
-          <span class="section__note">click a frame to play</span>
+        <div class="hero-profile reveal delay-1">
+          <div class="hero-profile-photo"><img src="assets/img/profile.jpg" alt="Ajoy Pal"></div>
+          <div class="hero-profile-meta"><strong>Gameplay & Cinematic Animator</strong><span>Character Animation · Mocap · Rigging</span></div>
         </div>
-
-        <div class="filters" id="filters" role="group" aria-label="Filter playblasts by category">
-          <button class="filter-tab is-active" data-category="All" aria-pressed="true">All</button>
-          <button class="filter-tab" data-category="Realistic Animation" aria-pressed="false">Realistic Animation</button>
-          <button class="filter-tab" data-category="Cartoon Animation" aria-pressed="false">Cartoon Animation</button>
-          <button class="filter-tab" data-category="Rigging" aria-pressed="false">Rigging</button>
-          <button class="filter-tab" data-category="Rhymes Animation" aria-pressed="false">Rhymes Animation</button>
-          <button class="filter-tab" data-category="Product Animation" aria-pressed="false">Product Animation</button>
-          <button class="filter-tab" data-category="Others" aria-pressed="false">Others</button>
-        </div>
-
-        <div class="work-grid" id="work-grid"></div>
-        <p class="work-empty" id="work-empty">Nothing filed under this category yet.</p>
       </div>
-    </section>
-  </main>
-
-  <!-- ============================= CONTACT ============================= -->
-  <section class="section" id="contact">
-    <div class="container contact">
-      <p class="contact__lede">Open to new animation work and collaborations.</p>
-      <div class="contact__links">
-        <a class="contact__link" href="https://www.linkedin.com/in/palajoy/" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="7.5" y1="10" x2="7.5" y2="17"/><circle cx="7.5" cy="6.7" r="0.9" fill="currentColor" stroke="none"/><path d="M11.5 17v-4.2c0-1.4 1-2.3 2.3-2.3s2.2.9 2.2 2.3V17"/><line x1="11.5" y1="10" x2="11.5" y2="17"/></svg>
-          Message on LinkedIn
-        </a>
-        <a class="contact__link" href="https://www.artstation.com/ajoypal1" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M8 8.5h4.2L16 15.5"/><path d="M9.8 12.2L7 17"/></svg>
-          View full gallery on ArtStation
-        </a>
-      </div>
+      <div class="hero-bottom reveal"><span>SCROLL TO EXPLORE</span><span class="hero-line"></span><span>01</span></div>
     </div>
-
-    <footer class="container">
-      <div class="timeline-rule" role="presentation"></div>
-      <div class="footer__row">
-        <span>© <span id="year"></span> Ajoy Pal</span>
-        <span>3D Animator — Maya · MotionBuilder · Blender · Unreal Engine</span>
-      </div>
-    </footer>
   </section>
 
-  <!-- ============================= MODAL ============================= -->
-  <div class="modal-backdrop" id="modal-backdrop" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <button class="modal__close" id="modal-close" aria-label="Close">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
-      </button>
-      <div class="modal__frame" id="modal-frame"></div>
-      <div class="modal__foot">
-        <div>
-          <h3 class="modal__title" id="modal-title"></h3>
-          <p class="modal__category" id="modal-category"></p>
-        </div>
-        <div class="modal__nav">
-          <button id="modal-prev" aria-label="Previous playblast">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><polyline points="15 6 9 12 15 18"/></svg>
-          </button>
-          <button id="modal-next" aria-label="Next playblast">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
-          </button>
-        </div>
+  <section class="work-section section" id="work">
+    <div class="container">
+      <div class="section-head reveal"><div><p class="section-label">01 — SELECTED WORK</p><h2>Work that moves.</h2></div><p>Curated animation work across realistic performance, stylized acting, rigging and product motion.</p></div>
+      <div class="work-filter reveal" id="work-filter">
+        <button class="filter active" data-category="All">All <span>16</span></button>
+        <button class="filter" data-category="Realistic">Realistic <span>2</span></button>
+        <button class="filter" data-category="Stylized">Stylized <span>2</span></button>
+        <button class="filter" data-category="Toon">Toon <span>9</span></button>
+        <button class="filter" data-category="Product">Product <span>1</span></button>
+        <button class="filter" data-category="Rigging">Rigging <span>2</span></button>
+      </div>
+      <div id="work-rows" class="work-rows"></div>
+    </div>
+  </section>
+
+  <section class="experience-section section" id="experience">
+    <div class="container">
+      <div class="section-head reveal"><div><p class="section-label">02 — EXPERIENCE</p><h2>Production experience.</h2></div><p>Three chapters spanning studio animation, specialist mocap training and real-time game production.</p></div>
+      <div class="experience-list">
+        <article class="experience-item reveal"><div class="exp-index">01</div><div class="exp-main"><p class="eyebrow">MAR 2025 — PRESENT</p><h3>Cinematic 3D Animator</h3><p class="exp-company">XSQUADS Tech Private Limited</p><ul><li>Create high-quality gameplay and cinematic character animations for real-time game production.</li><li>Implement root motion and in-place animation workflows.</li><li>Contribute to the development of ScarFall 2.0, a multiplayer battle royale game.</li><li>Collaborate with game designers, programmers and technical artists to integrate animations into Unity.</li></ul></div><div class="exp-type">GAME · REAL-TIME</div></article>
+        <article class="experience-item reveal delay-1"><div class="exp-index">02</div><div class="exp-main"><p class="eyebrow">JUN 2024 — OCT 2024</p><h3>3D Game Animator Trainee</h3><p class="exp-company">Technicolor Academy</p><ul><li>Completed focused training in mocap body animation, data cleanup and character animation.</li><li>Built stronger technical workflow knowledge, particularly in MotionBuilder.</li><li>Contributed to performance-driven animation projects and visual storytelling.</li></ul></div><div class="exp-type">MOCAP · TRAINING</div></article>
+        <article class="experience-item reveal delay-2"><div class="exp-index">03</div><div class="exp-main"><p class="eyebrow">JAN 2023 — MAY 2024</p><h3>3D Junior Animator</h3><p class="exp-company">CrazyCub Animation Studio</p><ul><li>Worked on movie trailers and cartoon animation projects.</li><li>Collaborated with production teams to deliver animated sequences under tight deadlines.</li></ul></div><div class="exp-type">ANIMATION · STUDIO</div></article>
       </div>
     </div>
-  </div>
+  </section>
 
-  <script src="assets/js/projects.js"></script>
-  <script src="assets/js/main.js"></script>
-</body>
-</html>
+  <section class="about-section section" id="about">
+    <div class="container about-layout">
+      <div class="about-copy reveal"><p class="section-label">03 — ABOUT</p><h2>Performance first. Technique in service of it.</h2><p>I care about readable poses, believable weight, clean arcs and intentional timing. My workflow is built around taking a shot from blocking through polish while keeping the animation practical for production.</p><div class="about-links"><a href="https://www.linkedin.com/in/palajoy/" target="_blank" rel="noopener noreferrer">LinkedIn <span>↗</span></a><a href="https://ajoypal1.artstation.com/" target="_blank" rel="noopener noreferrer">ArtStation <span>↗</span></a></div></div>
+      <div class="software-panel reveal delay-1"><div class="software-title"><span>SOFTWARE</span><span>WORKFLOW</span></div><div class="software-row"><strong>Maya</strong><span>Character animation</span></div><div class="software-row"><strong>MotionBuilder</strong><span>Mocap / cleanup</span></div><div class="software-row"><strong>Blender</strong><span>Rigging / animation</span></div><div class="software-row"><strong>Unity</strong><span>Game integration</span></div><div class="software-row"><strong>Unreal Engine</strong><span>Real-time / cinematics</span></div></div>
+    </div>
+  </section>
+
+  <section class="milestones-section section" id="milestones">
+    <div class="container">
+      <div class="section-head reveal"><div><p class="section-label">04 — MILESTONES</p><h2>Training & milestones.</h2></div><p>Certifications and training milestones from my animation career.</p></div>
+      <div class="certificate-grid">
+        <article class="certificate-card reveal"><div class="certificate-media"><img src="assets/img/certificates/technicolor-mocap.jpg" alt="Technicolor Academy Mocap certificate"></div><div class="certificate-copy"><p class="eyebrow">OCTOBER 2024</p><h3>Games Mocap Course</h3><p>Technicolor Academy / Mocap Partner Academy — focused training in mocap body animation, cleanup and character performance.</p></div></article>
+        <article class="certificate-card reveal delay-1"><div class="certificate-media"><img src="assets/img/certificates/moope-diploma.jpg" alt="Moope Institute Certificate of Excellence"></div><div class="certificate-copy"><p class="eyebrow">JANUARY 2023</p><h3>18-Month 3D Animation Course</h3><p>Moope Institute of Animation and Design — Certificate of Excellence for the completed 3D Animation course.</p></div></article>
+      </div>
+      <p class="milestones-more reveal">Also announced on <a href="https://lnkd.in/p/dMQZk-Bz" target="_blank" rel="noopener noreferrer">LinkedIn <span>↗</span></a></p>
+    </div>
+  </section>
+
+  <section class="contact-section section" id="contact">
+    <div class="container contact-inner reveal">
+      <div><p class="section-label">05 — CONTACT</p><h2>Have a shot<br>worth animating?</h2></div>
+      <div class="contact-side"><p>For studio roles, freelance animation, mocap work or collaboration.</p><a class="contact-btn" href="https://mail.google.com/mail/?view=cm&fs=1&to=contactmy3dart@gmail.com" target="_blank" rel="noopener noreferrer">Email Me <span>↗</span></a><div class="contact-socials"><a href="https://ajoypal1.artstation.com/" target="_blank" rel="noopener noreferrer">ArtStation</a><a href="https://www.linkedin.com/in/palajoy/" target="_blank" rel="noopener noreferrer">LinkedIn</a></div></div>
+    </div>
+  </section>
+</main>
+<footer><div class="container footer-inner"><span>© <span id="year"></span> Ajoy Pal</span><span>3D Animator — Gameplay / Cinematic / Mocap</span></div></footer>
+
+<div class="modal" id="modal" aria-hidden="true"><div class="modal-backdrop" data-close="1"></div><div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-head"><div><p class="eyebrow" id="modal-category">WORK</p><h3 id="modal-title">Project</h3></div><button class="modal-close" id="modal-close" aria-label="Close">×</button></div><div class="modal-video" id="modal-video"></div><div class="modal-foot"><button id="modal-prev">← Prev</button><span id="modal-count">01 / 16</span><button id="modal-next">Next →</button></div></div></div>
+<script src="assets/js/projects.js"></script><script src="assets/js/main.js"></script>
+</body></html>
