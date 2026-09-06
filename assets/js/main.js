@@ -33,11 +33,43 @@ function renderRows(filter='All'){
   }
   bindWorkCards(); revealElements();
 }
+function grabThumb(video){
+  return new Promise((resolve)=>{
+    if(video.dataset.thumbReady){ resolve(); return; }
+    if(!video.duration || !isFinite(video.duration) || video.duration<=0){ resolve(); return; }
+    const d=video.duration;
+    const candidates=[...new Set([0.6,1.5,3,d*0.25,d*0.5].map(t=>Math.min(t,Math.max(d-0.05,0))).filter(t=>t>0))];
+    const canvas=document.createElement('canvas'); canvas.width=16; canvas.height=9;
+    const ctx=canvas.getContext('2d');
+    let i=0;
+    function brightnessOk(){
+      try{
+        ctx.drawImage(video,0,0,16,9);
+        const data=ctx.getImageData(0,0,16,9).data;
+        let sum=0; for(let p=0;p<data.length;p+=4){ sum+=(data[p]+data[p+1]+data[p+2])/3; }
+        return sum/(data.length/4) > 18;
+      }catch(e){ return true; } // canvas read blocked (e.g. cross-origin) — just accept the frame
+    }
+    function onSeeked(){
+      video.removeEventListener('seeked', onSeeked);
+      if(brightnessOk() || i>=candidates.length){ video.dataset.thumbReady='1'; video.dataset.thumbTime=String(video.currentTime); resolve(); }
+      else { step(); }
+    }
+    function step(){
+      if(i>=candidates.length){ video.dataset.thumbReady='1'; resolve(); return; }
+      video.addEventListener('seeked', onSeeked);
+      video.currentTime=candidates[i++];
+    }
+    step();
+  });
+}
 function bindWorkCards(){
   $$('.work-card').forEach(card=>{
     const video=card.querySelector('video');
+    const settle=()=>{ if(video.dataset.thumbTime){ video.currentTime=parseFloat(video.dataset.thumbTime); } };
+    if(video.readyState>=1){ grabThumb(video); } else { video.addEventListener('loadedmetadata', ()=>grabThumb(video), {once:true}); }
     card.addEventListener('mouseenter',()=>{ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){video.play().catch(()=>{});} });
-    card.addEventListener('mouseleave',()=>{ video.pause(); video.currentTime=0; });
+    card.addEventListener('mouseleave',()=>{ video.pause(); settle(); });
     card.querySelector('[data-project]').addEventListener('click',()=>openModal(card.dataset.id));
   });
 }
